@@ -57,6 +57,7 @@ class TodoListController extends Controller
     public function show($id)
     {
         $todo = TodoList::find($id);
+        
         return view('todos.show', compact('todo'));
     }
 
@@ -68,7 +69,9 @@ class TodoListController extends Controller
      */
     public function edit($id)
     {
-        //
+        $todo = TodoList::find($id);
+        
+        return view('todos.edit', compact('todo'));
     }
 
     /**
@@ -80,7 +83,14 @@ class TodoListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        TodoList::find($id)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'deadline' => $request->deadline,
+            'tag' => $request->tag,
+        ]);
+        
+        return to_route('todos.index');
     }
 
     /**
@@ -91,6 +101,8 @@ class TodoListController extends Controller
      */
     public function destroy($id)
     {
-        //
+        TodoList::destroy($id);
+        
+        return to_route('todos.index');
     }
 }
