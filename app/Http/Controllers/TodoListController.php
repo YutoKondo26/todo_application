@@ -101,31 +101,22 @@ class TodoListController extends Controller
      */
     public function destroy($id)
     {
-        if(!$id) {
-            // return to_route('todos.index');
-            dd('IDがありません');
-        }else{
-            // return to_route('todos.index');
-            dd('IDがあります');
-            TodoList::destroy($id);
-            return redirect()->route('todos.index');
-        }
+
+        TodoList::destroy($id);
+        return redirect()->route('todos.index');
+        
         
     }
 
     public function massDelete(Request $request)
     {
-        // 削除するタスクのIDを取得
         $ids = $request->ids;
-        // dd($ids);
-
-        // IDが存在する場合、タスクを削除
-        if ($ids) {
-            TodoList::whereIn('id', $ids)->delete();            
-        }
-
-        // リダイレクトして削除が完了したことを通知
-        return to_route('todos.index')->with('success', '選択したタスクを削除しました');
+    
+        TodoList::whereIn('id', $ids)->delete(); 
+  
+    
+        return to_route('todos.index');
     }
+    
 
 }
