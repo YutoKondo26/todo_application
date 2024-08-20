@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            ToDo新規追加
+            ToDo編集画面
         </h2>
     </x-slot>
 
@@ -12,13 +12,13 @@
 
                     <section class="text-gray-600 body-font relative">
                         <div class="container px-5 py-6 mx-auto">
-                            <div class="lg:w-1/2 md:w-2/3 mx-auto flex flex-col text-left w-full mb-4">
+                            <div class="md:w-2/3 mx-120 flex flex-col text-left w-full mb-4">
                                 <x-input-error class="mb-4" :messages="$errors->all()"/>
                               </div>
                             <form method="post" action="{{ route('todos.update',[ 'id' => $todo->id]) }}">
                                 @csrf
                                 @method('PATCH')
-                                <div class="lg:w-1/2 md:w-2/3 mx-auto">
+                                <div class=" md:w-2/3 mx-auto">
                                     <div class="-m-2">
                                         <div class="p-2 w-full">
                                             <div class="relative">

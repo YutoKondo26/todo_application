@@ -12,7 +12,7 @@
 
                   <section class="text-gray-600 body-font">
                     <div class="container px-5 py-14 mx-auto">
-                      <div class="lg:w-2/3 w-full mx-auto flex flex-col text-center w-full mb-10">
+                      <div class="w-full mx-120 flex flex-col text-center w-full mb-10">
                             <a href="{{route('todos.create')}}" class="flex w-fit text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">タスクを追加</a>
 
 
@@ -21,7 +21,7 @@
                           <form action="{{ route('todos.massDelete') }}" method="post" id="deleteForm">
                             @csrf
                             @method('DELETE')
-                            <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+                            <div class="w-full mx-120 overflow-auto">
                               <table class="table-auto w-full text-left whitespace-no-wrap">
                                 <thead>
                                   <tr>
@@ -31,6 +31,7 @@
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">タスク名</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">タグ</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">期限</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th>
                                   </tr>
                                 </thead>
@@ -48,9 +49,19 @@
                                   </td>
                                   <td class="px-4 py-3">{{ $todo->title }}</td>
                                   <td class="px-4 py-3">{{ $todo->tag }}</td>
-                                  <td class="px-4 py-3">{{ $todo->deadline }}</td>
+                                    <td class="px-4 py-3">
+                                    @if($todo->deadline == now()->format('Y-m-d'))
+                                      <span class="text-red-500 font-bold">今日</span>
+                                    @else
+                                      {{ \Carbon\Carbon::parse($todo->deadline)->format('Y-m-d') }}
+                                    @endif
+                                    </td>
+                                  </td>
                                   <td class="px-4 py-3">
                                     <a href="{{route('todos.show', [ 'id' => $todo->id ])}}" class="flex w-fit text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">詳細</a>
+                                  </td>
+                                  <td class="px-4 py-3">
+                                    <a href="{{route('todos.edit', [ 'id' => $todo->id ])}}" class="flex w-fit text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">更新</a>
                                   </td>
                                 </tr>
                                 
@@ -60,7 +71,7 @@
                                 </tbody>
                               </table>
                             </div>
-                            <div class="mt-4 flex lg:w-2/3 w-full mx-auto">
+                            <div class="mt-4 flex mx-120 w-full">
                               <button type="submit" class="flex mr-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">タスク完了</button>
                               {{ $todos->links() }}
                             </div>

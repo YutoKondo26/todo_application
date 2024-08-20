@@ -28,7 +28,7 @@ class TodoListController extends Controller
     public function create()
     {
             
-        return view('todos.create');
+        return view('todos.create')->with('message', '新規タスク登録完了');
     }
 
     /**
