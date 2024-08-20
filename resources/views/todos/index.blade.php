@@ -26,19 +26,26 @@
                                   <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">タスク名</th>
                                   <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">タグ</th>
                                   <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">期限</th>
+                                  <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th>
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr>
-                                  <td class="px-4 py-3">Start</td>
-                                  <td class="px-4 py-3">5 Mb/s</td>
-                                  <td class="px-4 py-3">15 GB</td>
-                                  <td class="px-4 py-3 text-lg text-gray-900">Free</td>
-                           
-                                </tr>
-                       
-                        
-                  
+                              @foreach($todos as $todo)
+                              <tr>
+                                <td class="px-4 py-3">
+                                  <input type="checkbox">
+                                  {{ $todo->status }}
+                                </td>
+                                <td class="px-4 py-3">{{ $todo->title }}</td>
+                                <td class="px-4 py-3">{{ $todo->tag }}</td>
+                                <td class="px-4 py-3">{{ $todo->deadline }}</td>
+                                <td class="px-4 py-3">
+                                  <a href="{{route('todos.show', [ 'id' => $todo->id ])}}" class="flex w-fit text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">詳細</a>
+                                </td>
+                                </td>
+                              </tr>
+                              @endforeach
+                             
                               </tbody>
                             </table>
                           </div>

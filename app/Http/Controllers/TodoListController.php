@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TodoList;
 
 class TodoListController extends Controller
 {
@@ -13,7 +14,9 @@ class TodoListController extends Controller
      */
     public function index()
     {
-        return view('todos.index');
+        $todos = TodoList::select('id','title', 'description', 'deadline', 'tag')->get();
+        return view('todos.index', compact('todos'));
+
     }
 
     /**
@@ -35,7 +38,14 @@ class TodoListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        TodoList::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'deadline' => $request->deadline,
+            'tag' => $request->tag,
+        ]);
+            
+        return to_route('todos.index');
     }
 
     /**
@@ -46,7 +56,8 @@ class TodoListController extends Controller
      */
     public function show($id)
     {
-        //
+        $todo = TodoList::find($id);
+        return view('todos.show', compact('todo'));
     }
 
     /**
