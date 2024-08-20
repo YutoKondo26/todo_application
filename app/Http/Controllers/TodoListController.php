@@ -83,14 +83,14 @@ class TodoListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        TodoList::find($id)->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'deadline' => $request->deadline,
-            'tag' => $request->tag,
-        ]);
+        $todo = TodoList::find($id);
+        $todo->title = $request->title;
+        $todo->description = $request->description;
+        $todo->deadline = $request->deadline;
+        $todo->tag = $request->tag;
+        $todo->save();
         
-        return to_route('todos.index');
+        return redirect()->route('todos.index');
     }
 
     /**

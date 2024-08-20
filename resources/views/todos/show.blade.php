@@ -44,7 +44,7 @@
                                 </div>
                                 </div>
                                 <div class="flex justify-between p-2 w-full">
-                                {{-- <a href="{{ route('todo.update', [ 'id' => $todo->id ]) }}" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">編集</a> --}}
+                                <a href="{{ route('todos.edit', [ 'id' => $todo->id ]) }}" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">編集</a>
                                 {{-- <a href="{{ route('todo.destroy', [ 'id' => $todo->id ]) }}" class="flex mx-auto text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">消去</a> --}}
                                 </div>
                             </div>
