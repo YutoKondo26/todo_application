@@ -60,8 +60,9 @@
                                 </tbody>
                               </table>
                             </div>
-                            <div class="mt-4 lg:w-2/3 w-full mx-auto">
+                            <div class="mt-4 flex lg:w-2/3 w-full mx-auto">
                               <button type="submit" class="flex mr-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">タスク完了</button>
+                              {{ $todos->links() }}
                             </div>
                           </form>
                         </div>

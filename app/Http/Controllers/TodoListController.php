@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TodoList;
+use App\Http\Requests\TodoListRequest;
 
 class TodoListController extends Controller
 {
@@ -14,7 +15,7 @@ class TodoListController extends Controller
      */
     public function index()
     {
-        $todos = TodoList::select('id','title', 'description', 'deadline', 'tag')->get();
+        $todos = TodoList::select('id','title', 'description', 'deadline', 'tag')->paginate(2);
         return view('todos.index', compact('todos'));
 
     }
@@ -36,7 +37,7 @@ class TodoListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TodoListRequest $request)
     {
         TodoList::create([
             'title' => $request->title,
@@ -81,7 +82,7 @@ class TodoListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TodoListRequest $request, $id)
     {
         $todo = TodoList::find($id);
         $todo->title = $request->title;

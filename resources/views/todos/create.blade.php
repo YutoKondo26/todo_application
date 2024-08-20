@@ -5,17 +5,16 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
                     <section class="text-gray-600 body-font relative">
-                        <div class="container px-5 py-24 mx-auto">
-                          <div class="lg:w-1/2 md:w-2/3 mx-auto flex flex-col text-center w-full mb-12">
-
-                            
-                          </div>
+                        <div class="container px-5 py-6 mx-auto">
+                            <div class="lg:w-1/2 md:w-2/3 mx-auto flex flex-col text-left w-full mb-4">
+                              <x-input-error class="mb-4" :messages="$errors->all()"/>
+                            </div>
                             <form method="post" action="{{route('todos.store')}}">
                             @csrf
                   
