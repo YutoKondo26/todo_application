@@ -11,8 +11,8 @@
                 <div class="p-6 text-gray-900">
 
                   <section class="text-gray-600 body-font">
-                    <div class="container px-5 py-24 mx-auto">
-                      <div class="lg:w-2/3 w-full mx-auto flex flex-col text-center w-full mb-20">
+                    <div class="container px-5 py-14 mx-auto">
+                      <div class="lg:w-2/3 w-full mx-auto flex flex-col text-center w-full mb-10">
                             <a href="{{route('todos.create')}}" class="flex w-fit text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">タスクを追加</a>
 
 
@@ -25,7 +25,9 @@
                               <table class="table-auto w-full text-left whitespace-no-wrap">
                                 <thead>
                                   <tr>
-                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">ステータス</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                                      <input type="checkbox" id="select-all">
+                                    </th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">タスク名</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">タグ</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">期限</th>
@@ -34,10 +36,15 @@
                                 </thead>
                                 
                                 <tbody>
+                                  @if($todos->isEmpty())
+                                  <tr>
+                                    <td colspan="5" class="py-6">タスクがすべて完了しました！</td>
+                                  </tr>
+                                  @else
                                 @foreach($todos as $todo)
                                 <tr>
                                   <td class="px-4 py-3">
-                                    <input type="checkbox" name="ids[]" value="{{$todo->id}}">
+                                    <input type="checkbox" class="check-item" id="check" name="ids[]" value="{{$todo->id}}">
                                   </td>
                                   <td class="px-4 py-3">{{ $todo->title }}</td>
                                   <td class="px-4 py-3">{{ $todo->tag }}</td>
@@ -45,14 +52,15 @@
                                   <td class="px-4 py-3">
                                     <a href="{{route('todos.show', [ 'id' => $todo->id ])}}" class="flex w-fit text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">詳細</a>
                                   </td>
-                                  </td>
                                 </tr>
+                                
                                 @endforeach
+                                @endif
                               
                                 </tbody>
                               </table>
                             </div>
-                            <div class="flex pl-4 mt-4 lg:w-2/3 w-full mx-auto">
+                            <div class="mt-4 lg:w-2/3 w-full mx-auto">
                               <button type="submit" class="flex mr-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">タスク完了</button>
                             </div>
                           </form>
@@ -63,4 +71,18 @@
             </div>
         </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const selectAllCheckbox = document.getElementById('select-all');
+      let isChecked = false;
+
+      selectAllCheckbox.addEventListener('click', function () {
+        isChecked = !isChecked;
+        const checkboxes = document.querySelectorAll('input.check-item');
+        checkboxes.forEach(function (checkbox) {
+          checkbox.checked = isChecked;
+        });
+      });
+    });
+  </script>
 </x-app-layout>
