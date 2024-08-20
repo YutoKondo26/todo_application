@@ -33,7 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/todos/{id}/edit', [TodoListController::class, 'edit'])->name('todos.edit');
     Route::patch('/todos/{id}', [TodoListController::class, 'update'])->name('todos.update');
     Route::delete('/todos/{id}', [TodoListController::class, 'destroy'])->name('todos.destroy');
+    Route::delete('/todos/massDelete', [TodoListController::class, 'massDelete'])->name('todos.massDelete');
 });
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
