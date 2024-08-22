@@ -15,7 +15,7 @@ class TodoListController extends Controller
      */
     public function index()
     {
-        $todos = TodoList::select('id','title', 'description', 'deadline', 'tag')->paginate(2);
+        $todos = TodoList::select('id','title', 'description', 'deadline', 'tag')->paginate(20);
         return view('todos.index', compact('todos'));
 
     }
@@ -27,8 +27,9 @@ class TodoListController extends Controller
      */
     public function create()
     {
+
             
-        return view('todos.create')->with('message', '新規タスク登録完了');
+        return view('todos.create');
     }
 
     /**
@@ -45,6 +46,8 @@ class TodoListController extends Controller
             'deadline' => $request->deadline,
             'tag' => $request->tag,
         ]);
+        session()->flash('message', '新規タスク登録完了');
+
             
         return to_route('todos.index');
     }
@@ -90,6 +93,9 @@ class TodoListController extends Controller
         $todo->deadline = $request->deadline;
         $todo->tag = $request->tag;
         $todo->save();
+
+        session()->flash('message', 'タスク更新完了');
+
         
         return redirect()->route('todos.index');
     }

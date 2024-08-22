@@ -15,6 +15,12 @@
                       <div class="w-full mx-120 flex flex-col text-center w-full mb-10">
                             <a href="{{route('todos.create')}}" class="flex w-fit text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">タスクを追加</a>
 
+                            @if(session('message'))
+                              <div>
+                                {{ session('message') }}
+                              </div>
+                            @endif
+
 
                             
                           </div>
