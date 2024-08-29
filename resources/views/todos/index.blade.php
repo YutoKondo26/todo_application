@@ -12,24 +12,45 @@
 
                   <section class="text-gray-600 body-font">
                     <div class="container px-5 py-14 mx-auto">
-                      <div class="w-full mx-120 flex flex-col text-center w-full mb-10">
+                      <div class="w-full mx-120 flex text-center w-full mb-10">
                             <a href="{{route('todos.create')}}" class="flex w-fit text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">タスクを追加</a>
 
                             @if(session('message'))
-                              <div>
+                              <div class="bg-blue-400 px-20 py-2 rounded-xl	text-white w-fit mx-auto">
                                 {{ session('message') }}
                               </div>
                             @endif
 
+                            <form method="get" action="{{ route('todos.index') }}">
+                              <input type="text" name="search" placeholder="検索">
+                              <button class=" ml-0 w-fit text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">検索する</button>
+                            </form>
+
+                          <form method="GET" action="{{ route('todos.index') }}">
+                            <input type="hidden" name="sort" value="deadline">
+                            <input type="hidden" name="direction" value="asc">
+                            <button type="submit" class="flex w-fit text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">締め切り日 昇順</button>
+                        </form>
+                        
+                        <form method="GET" action="{{ route('todos.index') }}">
+                            <input type="hidden" name="sort" value="deadline">
+                            <input type="hidden" name="direction" value="desc">
+                            <button type="submit" class="flex w-fit text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">締め切り日 降順</button>
+                        </form>
+
+                          
+
 
                             
                           </div>
+
                           <form action="{{ route('todos.massDelete') }}" method="post" id="deleteForm">
                             @csrf
                             @method('DELETE')
                             <div class="w-full mx-120 overflow-auto">
                               <table class="table-auto w-full text-left whitespace-no-wrap">
                                 <thead>
+                                  
                                   <tr>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
                                       <input type="checkbox" id="select-all">
@@ -44,7 +65,7 @@
                                 
                                 <tbody>
                                   @if($todos->isEmpty())
-                                  <tr>
+                                  <tr class="bg-blue-400 px-8 py-2">
                                     <td colspan="5" class="py-6">タスクがすべて完了しました！</td>
                                   </tr>
                                   @else

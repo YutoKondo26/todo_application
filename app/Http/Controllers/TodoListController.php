@@ -13,11 +13,33 @@ class TodoListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $todos = TodoList::select('id','title', 'description', 'deadline', 'tag')->paginate(20);
+        // $search = $request->search;//$request->inputのname
+        // $query = TodoList::search($search);//モデル名::search($変数)
+        // $todos = $query->select('id','title', 'description', 'deadline', 'tag')
+        // ->paginate(20);
+        // return view('todos.index', compact('todos'));
+        
+        $search = $request->search;  // 検索キーワードを取得
+        $query = TodoList::query();  // TodoListモデルのクエリビルダーを取得
+    
+        // 検索条件がある場合は、検索を適用
+        if (!empty($search)) {
+            $query->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('tag', 'like', "%{$search}%");
+        }
+    
+        // 並び替えを適用
+        $query->orderBy($request->get('sort', 'deadline'), $request->get('direction', 'asc'));
+    
+        // ページネーションを適用
+        $todos = $query->select('id', 'title', 'description', 'deadline', 'tag')
+                       ->paginate(20);
+    
+        // ビューにデータを渡す
         return view('todos.index', compact('todos'));
-
     }
 
     /**
@@ -110,6 +132,8 @@ class TodoListController extends Controller
     {
 
         TodoList::destroy($id);
+        session()->flash('message', 'タスク完了');
+
         return redirect()->route('todos.index');
         
         
@@ -121,7 +145,8 @@ class TodoListController extends Controller
     
         TodoList::whereIn('id', $ids)->delete(); 
   
-    
+        session()->flash('message', 'タスク完了');
+
         return to_route('todos.index');
     }
     
